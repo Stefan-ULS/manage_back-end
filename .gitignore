@@ -1,0 +1,8 @@
+# Ignore the __pycache__ directory inside the /back-end/ directory
+/back-end/__pycache__/
+
+# Ignore the .env file inside the /back-end/ directory
+/back-end/.env
+
+# Ignore the __pycache__ directory inside the project root
+__pycache__/
