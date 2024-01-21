@@ -31,7 +31,7 @@ class SQLiteDB:
         try:
             cursor = self.conn.cursor()
             column_name = ', '.join(kwargs.keys())
-            placeholders = ', '.join(['?']) * len(kwargs)
+            placeholders = ', '.join('?' * len(kwargs))
             values = tuple(kwargs.values())
 
             query = f"INSERT INTO {table_name} ({column_name}) VALUES ({placeholders})"
@@ -43,16 +43,20 @@ class SQLiteDB:
             print(f'Error inserting data: {e}')
             return False
         
-    def execute_query(self, query):
+    def execute_query(self, query, *parameters):
         try:
             cursor = self.conn.cursor()
-            cursor.execute(query)
+            # Check if any parameters are provided
+            if parameters:
+                cursor.execute(query, parameters)
+            else:
+                cursor.execute(query)
             self.conn.commit()
             return cursor.fetchall()
         except sqlite3.Error as e:
-            print(f'Error executing query : {e}')
+            print(f'Error executing query: {e}')
             return None
-        
+
     def close(self):
         if self.conn:
             self.conn.close()
@@ -73,9 +77,10 @@ cursor = conn.cursor()
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY,
-        first_name TEXT,
-        last_name TEXT,
+        name TEXT,
+        surname TEXT,
         email TEXT,
+        phone TEXT,
         password_hash TEXT
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )

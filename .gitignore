@@ -1,7 +1,7 @@
 # Ignore the __pycache__ directory inside the /back-end/ directory
 /back-end/__pycache__/
-
 /back-end/db/db.db
+/db/db.db
 
 # Ignore the .env file inside the /back-end/ directory
 /back-end/.env
